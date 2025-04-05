@@ -34,11 +34,9 @@ library(lubridate)
 dados_tratados <- read_csv("Dados_auxiliares/dados_apos_coluna_mes.csv", quote = "\"", locale = locale(encoding = "UTF-8"))
 
 # Transformando peso, altura, ppg, rpg e apg em númerico
-dados_tratados <- dados_tratados %>%
+dados <- dados_tratados %>%
   mutate(
     PPG = as.numeric(PPG),
     RPG = as.numeric(RPG),
     APG = as.numeric(APG),
-    Altura = as.numeric(Altura),
-    Peso = as.numeric(Peso)
   )
