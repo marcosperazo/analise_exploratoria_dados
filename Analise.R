@@ -40,3 +40,5 @@ dados <- dados_tratados %>%
     RPG = as.numeric(RPG),
     APG = as.numeric(APG),
   )
+
+

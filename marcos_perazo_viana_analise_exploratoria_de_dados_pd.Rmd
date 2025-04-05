@@ -10,22 +10,51 @@ knitr::opts_chunk$set(echo = TRUE)
 tinytex::install_tinytex(force = TRUE)
 ```
 
-## R Markdown
+## Carregando bibliotecas
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+```{r importando bibliotecas 1, echo = TRUE}
+library(tidyverse)
+library(tidyr)
+library(purrr)
+library(dlookr)
+library(summarytools)
+library(readxl)
+library(knitr)
+library(data.table)
+library(ggpubr)
+library(corrplot)
 ```
 
-## Including Plots
+## Introdução - Bibliotecas (parte 2)
 
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r importando bibliotecas 2, echo = TRUE}
+library(rcompanion)
+library(stargazer)
+library(mice)
+library(rmarkdown)
+library(tinytex)
+library(sandwich)
+library(magrittr)
+library(shiny)
+library(plm)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+### 4 - Carregamento da base.
+
+```{r Carregamento da base de jogadores da NBA, echo=TRUE}
+dados_tratados <- read_csv("Dados_auxiliares/dados_apos_coluna_mes.csv", quote = "\"", locale = locale(encoding = "UTF-8"))
+```
+
+```{r Tratamento dados númericos, echo=TRUE}
+dados <- dados_tratados %>%
+  mutate(
+    PPG = as.numeric(PPG),
+    RPG = as.numeric(RPG),
+    APG = as.numeric(APG),
+  )
+```
+
+```{r frota, echo=TRUE}
+kable(head(dados))
+```
+
