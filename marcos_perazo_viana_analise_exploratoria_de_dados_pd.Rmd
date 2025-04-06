@@ -10,7 +10,7 @@ knitr::opts_chunk$set(echo = TRUE)
 tinytex::install_tinytex(force = TRUE)
 ```
 
-```{r importando bibliotecas 1, echo = FALSE}
+```{r importando bibliotecas 1, include = FALSE}
 library(tidyverse)
 library(tidyr)
 library(purrr)
@@ -23,7 +23,7 @@ library(ggpubr)
 library(corrplot)
 ```
 
-```{r importando bibliotecas 2, echo = FALSE}
+```{r importando bibliotecas 2, include = FALSE}
 library(rcompanion)
 library(stargazer)
 library(mice)
