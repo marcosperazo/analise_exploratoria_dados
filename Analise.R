@@ -41,4 +41,4 @@ dados <- dados_tratados %>%
     APG = as.numeric(APG),
   )
 
-
+kable(head(dados))

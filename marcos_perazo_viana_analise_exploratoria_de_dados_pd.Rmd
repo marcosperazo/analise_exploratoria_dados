@@ -1,7 +1,7 @@
 ---
-title: "marcos_perazo_viana_analise_exploratoria_de_dados_pd"
+title: "Análise descritiva e estatística da base dos jogadores ativos da NBA"
 author: "Marcos Perazo Viana"
-date: "`r Sys.Date()`"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: pdf_document
 ---
 
@@ -10,9 +10,7 @@ knitr::opts_chunk$set(echo = TRUE)
 tinytex::install_tinytex(force = TRUE)
 ```
 
-## Carregando bibliotecas
-
-```{r importando bibliotecas 1, echo = TRUE}
+```{r importando bibliotecas 1, echo = FALSE}
 library(tidyverse)
 library(tidyr)
 library(purrr)
@@ -25,9 +23,7 @@ library(ggpubr)
 library(corrplot)
 ```
 
-## Introdução - Bibliotecas (parte 2)
-
-```{r importando bibliotecas 2, echo = TRUE}
+```{r importando bibliotecas 2, echo = FALSE}
 library(rcompanion)
 library(stargazer)
 library(mice)
@@ -41,7 +37,7 @@ library(plm)
 
 ## Introdução
 
-Escolha uma base de dados para realizar esse projeto. Essa base de dados será utilizada durante toda sua análise. Essa base necessita ter 4 (ou mais) variáveis de interesse, onde todas são numéricas (confira com o professor a possibilidade de utilização de dados categóricos). Observe que é importante que haja dados faltantes em pelo menos uma variável para executar esse projeto. Caso você tenha dificuldade para escolher uma base, o professor da disciplina irá designar para você. Explique qual o motivo para a escolha dessa base e aponte os resultados esperados através da análise.
+A base de dados escolhida para realizar esse projeto foi a de jogadores ativos da NBA. Essa base de dados será utilizada durante toda sua análise. Essa base necessita ter 4 (ou mais) variáveis de interesse, onde todas são numéricas (confira com o professor a possibilidade de utilização de dados categóricos). Observe que é importante que haja dados faltantes em pelo menos uma variável para executar esse projeto. Caso você tenha dificuldade para escolher uma base, o professor da disciplina irá designar para você. Explique qual o motivo para a escolha dessa base e aponte os resultados esperados através da análise.
 
 ### 4 - Carregamento da base.
 
