@@ -37,12 +37,22 @@ library(plm)
 
 ## Introdução
 
-A base de dados escolhida para realizar esse projeto foi a de jogadores ativos da NBA. Essa base de dados será utilizada durante toda sua análise. Essa base necessita ter 4 (ou mais) variáveis de interesse, onde todas são numéricas (confira com o professor a possibilidade de utilização de dados categóricos). Observe que é importante que haja dados faltantes em pelo menos uma variável para executar esse projeto. Caso você tenha dificuldade para escolher uma base, o professor da disciplina irá designar para você. Explique qual o motivo para a escolha dessa base e aponte os resultados esperados através da análise.
+A base de dados escolhida para realizar esse projeto foi a de jogadores ativos da NBA. Essa base de dados foi a única base a utilizada durante toda a análise. E foi obtida no site da NBA (https://www.nba.com/), na aba Players, em 22 de março de 2025. Os dados capturados foram os nomes dos jogadores, time em que jogam, posição, altura, peso, data de nascimento, média de pontos, rebotes e assistências por jogo. Foi criada uma coluna com o mês de nascimento dos jogadores.
 
-### 4 - Carregamento da base.
+Observe que é importante que haja dados faltantes em pelo menos uma variável para executar esse projeto. Explique qual o motivo para a escolha dessa base e aponte os resultados esperados através da análise.
+
+### Site da NBA
+
+![Site da NBA](Dados_auxiliares/nba.png)
+### Página do jogador Gui Santos
+
+![Gui Santos](Dados_auxiliares/gui_santos.png)
+
+### Carregamento da base.
 
 ```{r Carregamento da base de jogadores da NBA, echo=TRUE}
-dados_tratados <- read_csv("Dados_auxiliares/dados_apos_coluna_mes.csv", quote = "\"", locale = locale(encoding = "UTF-8"))
+dados_tratados <- read_csv("Dados_auxiliares/dados_apos_coluna_mes.csv", quote = "\"",
+                           locale = locale(encoding = "UTF-8"))
 ```
 
 ```{r Tratamento dados númericos, echo=TRUE}
