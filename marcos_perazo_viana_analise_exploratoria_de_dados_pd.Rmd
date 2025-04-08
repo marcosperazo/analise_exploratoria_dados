@@ -35,18 +35,18 @@ library(shiny)
 library(plm)
 ```
 
-## Introdução
+# Introdução
 
-A base de dados escolhida para realizar esse projeto foi a de jogadores ativos da NBA. Essa base de dados foi a única base a utilizada durante toda a análise. E foi obtida no [Site da NBA](https://www.nba.com/), na aba Players, em 22 de março de 2025. Os dados capturados foram os nomes dos jogadores, time em que jogam, posição, altura, peso, data de nascimento, média de pontos, rebotes e assistências por jogo, além da idade, draft e exeriência. Foi criada uma coluna com o mês de nascimento dos jogadores.
-Com os dados capturados, será possível explorar várias possíveis correlações importantes, como a altura dos jogadores e a média de rebotes por jogo. A tendência é de que jogadores mais altos têm vantagem nos rebotes. Essa correlação pode ser analisada para confirmar ou refutar essa tendência.
-Seguem outras correlações possíveis:
-O Peso dos jogadores e pontos por jogo: Pode ser interessante verificar se jogadores com maior massa corporal têm mais facilidade em marcar pontos, especialmente em posições como pivô.
-As médias de assistências por jogo e de pontos por jogo, essa correlação pode mostrar a relação entre jogadores que criam oportunidades para os outros e aqueles que finalizam.
-A altura dos jogadores e as assistências por jogo, jogadores mais baixos, como armadores, tendem a ter mais assistências. Essa relação pode ser interessante de analisar.
-As médias de pontos por jogo e rebotes por jogo, pode haver uma relação entre jogadores que pontuam muito e sua capacidade de pegar rebotes, dependendo de suas posições em quadra.
+Este projeto utiliza como base de dados informações sobre jogadores ativos da NBA, obtidas no site oficial da NBA, na aba Players, no dia 22 de março de 2025. Os dados coletados incluem: nomes dos jogadores, equipes em que atuam, posições, altura, peso, data de nascimento, idade, média de pontos, rebotes e assistências por jogo, além de informações sobre o draft e experiência profissional. Adicionalmente, foi criada uma variável indicando o mês de nascimento dos jogadores.
+Com esses dados, é possível investigar diversas correlações estatísticas relevantes que ajudam a compreender o desempenho e as características dos atletas. Por exemplo, pode-se analisar a relação entre altura dos jogadores e a média de rebotes por jogo. Partindo da hipótese de que jogadores mais altos possuem vantagem nesse quesito, essa análise busca confirmar ou refutar tal tendência.
+Outras correlações potencialmente interessantes incluem:
+- Peso e média de pontos por jogo: Investiga se jogadores com maior massa corporal têm vantagens em marcar pontos, especialmente em posições como pivô.
+- Assistências por jogo e pontos por jogo: Examina a relação entre jogadores que criam oportunidades para seus colegas de equipe e aqueles que executam as finalizações.
+- Altura e assistências por jogo: Avalia se jogadores mais baixos, como armadores, têm maior tendência a contribuir com assistências.
+- Média de pontos por jogo e rebotes por jogo: Analisa a relação entre a capacidade de pontuar e pegar rebotes, considerando as diferentes posições em quadra.
 
+Essas análises têm como objetivo explorar padrões e características que podem enriquecer a compreensão sobre o desempenho dos jogadores da NBA.
 
-Observe que é importante que haja dados faltantes em pelo menos uma variável para executar esse projeto. Explique qual o motivo para a escolha dessa base e aponte os resultados esperados através da análise.
 
 
 ![Site da NBA](Dados_auxiliares/nba.png)
