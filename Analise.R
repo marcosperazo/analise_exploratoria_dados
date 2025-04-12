@@ -58,3 +58,29 @@ dados <- dados %>%
 kable(head(dados))
 
 dados %>% dplyr::select(Altura, PPG, APG, RPG) %>% summarytools::descr() %>% kable()
+
+
+dados %>% dplyr::select(PPG, Altura) %>% ggplot(aes(x=PPG, y =Altura)) + geom_point() + geom_smooth(method = "lm", se = FALSE) + theme_classic()
+
+pairs(dados)
+
+dados_numericos <- dados[sapply(dados, is.numeric)]
+pairs(dados_numericos)
+
+
+dados %>% 
+  ggplot(aes(x = Altura, y = RPG)) +
+  geom_point() +
+  geom_smooth(method = "lm")
+
+
+dados %>% 
+  ggplot(aes(x = Altura, y = PPG)) +
+  geom_point() +
+  geom_smooth(method = "lm")
+
+dados %>% 
+  ggplot(aes(x = APG, y = PPG)) +
+  geom_point() +
+  geom_smooth(method = "lm")
+

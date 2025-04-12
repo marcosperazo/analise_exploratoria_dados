@@ -50,17 +50,15 @@ Essas análises têm como objetivo explorar padrões e características que pode
 
   ![Site da NBA](Dados_auxiliares/nba.png)
 
-
-![Gui Santos](Dados_auxiliares/gui_santos.png)
-
 # Carregamento da base.
 
-```{r Carregamento da base de jogadores da NBA, echo=FALSE}
+```{r Carregamento da base de jogadores da NBA, echo=TRUE, message=FALSE, warning=FALSE}
 dados_tratados <- read_csv("Dados_auxiliares/dados_apos_coluna_mes.csv", quote = "\"",
-                           locale = locale(encoding = "UTF-8"))
+                           locale = locale(encoding = "UTF-8"), show_col_types = FALSE)
 ```
 
-```{r Tratamento dados númericos, echo=FALSE}
+
+```{r Tratamento dados númericos, echo=FALSE, message=FALSE, warning=FALSE}
 dados <- dados_tratados %>%
   mutate(
     PPG = as.numeric(PPG),
@@ -87,9 +85,55 @@ dados <- dados %>%
   )
 ```
 
+Analisar a centralidade dos dados, dipersão, assimetria, bem como suas estatísticas de ordem, a fim de checar se há presença de outliers.
 
-```{r desc variavel Altura, Peso, Pontos, Assistências e Rebotes, include = FALSE}
-dados %>% dplyr::select(Altura, Peso, PPG, APG, RPG) %>% summarytools::descr() %>% kable()
+```{r Desc variavel Altura, Peso, Pontos, Rebotes e Assistências, echo=TRUE, message=FALSE, warning=FALSE, error=FALSE}
+dados %>% dplyr::select(Altura, Peso, PPG, RPG, APG) %>% summarytools::descr() %>% kable()
 ```
 
+
+### Dispersão Altura x Rebotes
+
+```{r Dispersão Altura e Rebotes, include=TRUE, message=FALSE, warning=FALSE}
+dados %>% 
+  ggplot(aes(x = Altura, y = RPG)) +
+  geom_point() +
+  geom_smooth(method = "lm")
+```
+
+### Dispersão Pontos x Peso
+
+```{r Dispersão Pontos e Peso, include=TRUE, message=FALSE, warning=FALSE}
+dados %>% 
+  ggplot(aes(x = Peso, y = PPG)) +
+  geom_point() +
+  geom_smooth(method = "lm")
+```
+
+### Dispersão Pontos x Assistências
+
+```{r Dispersão Pontos e Assistências, include=TRUE, message=FALSE, warning=FALSE}
+dados %>% 
+  ggplot(aes(x = PPG, y = APG)) +
+  geom_point() +
+  geom_smooth(method = "lm")
+```
+
+### Dispersão Pontos x Rebotes
+
+```{r Dispersão Pontos e Rebotes, include=TRUE, message=FALSE, warning=FALSE}
+dados %>% 
+  ggplot(aes(x = PPG, y = RPG)) +
+  geom_point() +
+  geom_smooth(method = "lm")
+```
+
+### Dispersão Altura x Assistências
+
+```{r Dispersão Altura e Assistências, include=TRUE, message=FALSE, warning=FALSE}
+dados %>% 
+  ggplot(aes(x = APG, y = Altura)) +
+  geom_point() +
+  geom_smooth(method = "lm")
+```
 
