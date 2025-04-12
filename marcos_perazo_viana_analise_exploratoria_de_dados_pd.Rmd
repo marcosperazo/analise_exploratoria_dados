@@ -72,13 +72,13 @@ dados <- dados_tratados %>%
 ## Observações iniciais:
 1 - Fazendo uma análise preliminar, verificamos que a linha 507 não possui dados em nenhuma das colunas, e foi determinada a eliminação dessa linha.
 
-```{r Eliminação da linha 507, include=FALSE}
+```{r Eliminação da linha 507, echo=TRUE}
 dados <- dados %>% slice(-507)
 ```
 
 2 - Após verificar as estatisticas individuais dos atletas que receberam NA nas colunas PPG, APG e RPG, verificamos que esses campos deveriam receber valor zero. O que foi realizado.
 
-```{r Atribuir valor zero nos campos PPG, APG e RPG, include=FALSE}
+```{r Atribuir valor zero nos campos PPG, APG e RPG, echo=TRUE}
 dados <- dados %>%
   mutate(
     PPG = replace_na(PPG, 0),
@@ -88,8 +88,8 @@ dados <- dados %>%
 ```
 
 
-```{r desc variavel Altura x Rebotes, echo = FALSE}
-dados %>% dplyr::select(Altura, RPG) %>% summarytools::descr() %>% kable()
+```{r desc variavel Altura, Peso, Pontos, Assistências e Rebotes, include = FALSE}
+dados %>% dplyr::select(Altura, Peso, PPG, APG, RPG) %>% summarytools::descr() %>% kable()
 ```
 
 
