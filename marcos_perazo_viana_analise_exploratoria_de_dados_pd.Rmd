@@ -37,7 +37,7 @@ library(plm)
 
 # Introdução
 
-Este projeto utiliza como base de dados informações sobre jogadores ativos da NBA, obtidas no [site oficial da NBA](https://www.nba.com/), na aba *Players*, no dia 22 de março de 2025. Os dados coletados incluem: nomes dos jogadores, equipes em que atuam, posições, altura, peso, data de nascimento, idade, média de pontos, rebotes e assistências por jogo, além de informações sobre o *Draft* e experiência profissional. Adicionalmente, foi criada uma variável indicando o mês de nascimento dos jogadores.
+Este projeto utiliza como base de dados informações sobre jogadores ativos da NBA, obtidas no [site oficial da NBA](https://www.nba.com/), na aba *Players*, no dia 22 de março de 2025. Os dados coletados incluem: nomes dos jogadores, equipes em que atuam, posições, altura, peso, data de nascimento, idade, média de pontos, rebotes e assistências por jogo da atual temporada, além de informações sobre o *Draft* e experiência profissional. Adicionalmente, foi criada uma variável indicando o mês de nascimento dos jogadores.
 Com esses dados, é possível investigar diversas correlações estatísticas relevantes que ajudam a compreender o desempenho e as características dos atletas. Por exemplo, pode-se analisar a relação entre altura dos jogadores e a média de rebotes por jogo. Partindo da hipótese de que jogadores mais altos possuem vantagem nesse quesito, essa análise busca confirmar ou refutar tal tendência.
 Outras correlações potencialmente interessantes incluem:  
 - Peso e média de pontos por jogo: Investiga se jogadores com maior massa corporal têm vantagens em marcar pontos, especialmente em posições como pivô.  
@@ -69,18 +69,27 @@ dados <- dados_tratados %>%
   )
 ```
 
-```{r frota, echo=FALSE}
-kable(head(dados))
+## Observações iniciais:
+1 - Fazendo uma análise preliminar, verificamos que a linha 507 não possui dados em nenhuma das colunas, e foi determinada a eliminação dessa linha.
+
+```{r Eliminação da linha 507, include=FALSE}
+dados <- dados %>% slice(-507)
 ```
 
-```{r desc variavel Altura x Rebotes, echo = TRUE}
+2 - Após verificar as estatisticas individuais dos atletas que receberam NA nas colunas PPG, APG e RPG, verificamos que esses campos deveriam receber valor zero. O que foi realizado.
+
+```{r Atribuir valor zero nos campos PPG, APG e RPG, include=FALSE}
+dados <- dados %>%
+  mutate(
+    PPG = replace_na(PPG, 0),
+    RPG = replace_na(RPG, 0),
+    APG = replace_na(APG, 0)
+  )
+```
+
+
+```{r desc variavel Altura x Rebotes, echo = FALSE}
 dados %>% dplyr::select(Altura, RPG) %>% summarytools::descr() %>% kable()
 ```
 
-```{r desc variavel Altura x Rebotes sem kable, echo = TRUE}
-dados %>% dplyr::select(Altura, RPG) %>% summarytools::descr()
-```
 
-```{r desc variavel Altura x Rebotes com estilo, echo = TRUE}
-dados %>% dplyr::select(Altura, RPG) %>% summarytools::descr(., style = 'rmarkdown') %>% kable()
-```

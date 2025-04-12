@@ -42,6 +42,19 @@ dados <- dados_tratados %>%
     APG = as.numeric(APG),
   )
 
+dados <- dados %>% slice(-507)
+
+
+
+dados <- dados %>%
+  mutate(
+    PPG = replace_na(PPG, 0),
+    RPG = replace_na(RPG, 0),
+    APG = replace_na(APG, 0)
+  )
+
+
+
 kable(head(dados))
 
 dados %>% dplyr::select(Altura, RPG) %>% summarytools::descr() %>% kable()
