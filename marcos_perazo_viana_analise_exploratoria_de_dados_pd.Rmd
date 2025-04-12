@@ -48,7 +48,7 @@ Outras correlações potencialmente interessantes incluem:
 Essas análises têm como objetivo explorar padrões e características que podem enriquecer a compreensão sobre o desempenho dos jogadores da NBA.
 
 
-  ![Site da NBA](Dados_auxiliares/nba.png){out.width=80%, out.width=80%}
+  ![Site da NBA](Dados_auxiliares/nba.png)
 
 
 ![Gui Santos](Dados_auxiliares/gui_santos.png)
@@ -73,3 +73,14 @@ dados <- dados_tratados %>%
 kable(head(dados))
 ```
 
+```{r desc variavel Altura x Rebotes, echo = TRUE}
+dados %>% dplyr::select(Altura, RPG) %>% summarytools::descr() %>% kable()
+```
+
+```{r desc variavel Altura x Rebotes sem kable, echo = TRUE}
+dados %>% dplyr::select(Altura, RPG) %>% summarytools::descr()
+```
+
+```{r desc variavel Altura x Rebotes com estilo, echo = TRUE}
+dados %>% dplyr::select(Altura, RPG) %>% summarytools::descr(., style = 'rmarkdown') %>% kable()
+```

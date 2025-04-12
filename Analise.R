@@ -43,3 +43,5 @@ dados <- dados_tratados %>%
   )
 
 kable(head(dados))
+
+dados %>% dplyr::select(Altura, RPG) %>% summarytools::descr() %>% kable()
