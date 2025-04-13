@@ -85,6 +85,9 @@ dados <- dados %>%
   )
 ```
 
+3 - 
+
+
 Analisar a centralidade dos dados, dipersão, assimetria, bem como suas estatísticas de ordem, a fim de checar se há presença de outliers.
 
 ```{r Desc variavel Altura, Peso, Pontos, Rebotes e Assistências, echo=TRUE, message=FALSE, warning=FALSE, error=FALSE}
@@ -95,43 +98,76 @@ dados %>% dplyr::select(Altura, Peso, PPG, RPG, APG) %>%
 
 ### Dispersão Altura x Rebotes
 
-```{r Dispersão Altura e Rebotes, include=TRUE, echo=FALSE, message=FALSE, warning=FALSE, fig.width=6.4, fig.height=4.8}
+```{r Dispersão Altura e Rebotes, include=TRUE, echo=FALSE, message=FALSE, warning=FALSE, fig.width=6, fig.height=4, fig.align='center'}
 dados %>% 
   ggplot(aes(x = Altura, y = RPG)) +
   geom_point() +
-  geom_smooth(method = "lm") +
-  labs(title='Gráfico com a dispersão entre Altura e Rebotes por jogo', x='Altura', y='Rebotes por jogo')
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(title='Gráfico com a dispersão entre Altura e Rebotes por jogo', x='Altura', y='Rebotes por jogo') +
+  theme_classic2()
 ```
 
-### Dispersão Pontos x Peso
+Correlação entre as variaveis Altura e Rebotes por jogo
 
-```{r Dispersão Pontos e Peso, include=TRUE, echo=FALSE, message=FALSE, warning=FALSE, fig.width=6.4, fig.height=4.8}
+```{r Correlacao entre as variaveis Altura e Rebotes, echo = FALSE}
+kable(cor(dados %>% dplyr::select(Altura, RPG)))
+```
+
+### Dispersão Peso x Pontos
+
+```{r Dispersão Pontos e Peso, include=TRUE, echo=FALSE, message=FALSE, warning=FALSE, fig.width=6, fig.height=4, fig.align='center'}
 dados %>% 
   ggplot(aes(x = Peso, y = PPG)) +
   geom_point() +
-  geom_smooth(method = "lm") +
-  labs(title='Gráfico com a dispersão entre Peso e Pontos por jogo', x='Peso', y='Pontos por jogo')
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(title='Gráfico com a dispersão entre Peso e Pontos por jogo', x='Peso', y='Pontos por jogo') +
+  theme_classic2()
 ```
+
+Correlação entre as variaveis Peso e Pontos por jogo
+
+```{r Correlacao entre as variaveis Peso e Pontos por jogo, echo = FALSE}
+kable(cor(dados %>% dplyr::select(Peso, PPG)))
+```
+
 
 ### Dispersão Pontos x Assistências
 
-```{r Dispersão Pontos e Assistências, include=TRUE, echo=FALSE, message=FALSE, warning=FALSE, fig.width=6.4, fig.height=4.8}
+```{r Dispersão Pontos e Assistências, include=TRUE, echo=FALSE, message=FALSE, warning=FALSE, fig.width=6, fig.height=4, fig.align='center'}
 dados %>% 
   ggplot(aes(x = PPG, y = APG)) +
   geom_point() +
-  geom_smooth(method = "lm") +
-  labs(title='Gráfico com a dispersão entre Pontos por jogo e Assistências por jogo', x='Pontos por jogo', y='Assistências por jogo')
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(title='Gráfico com a dispersão entre Pontos por jogo e Assistências por jogo', x='Pontos por jogo', y='Assistências por jogo') +
+  theme_classic2()
 ```
+
+Correlação entre as variaveis Pontos e AssistÊncias por jogo
+
+```{r Correlacao entre as variaveis Pontos e Assistências por jogo, echo = FALSE}
+kable(cor(dados %>% dplyr::select(PPG, APG)))
+```
+
+
 
 ### Dispersão Pontos x Rebotes
 
-```{r Dispersão Pontos e Rebotes, include=TRUE, echo=FALSE ,message=FALSE, warning=FALSE, fig.width=6.4, fig.height=4.8}
+```{r Dispersão Pontos e Rebotes, include=TRUE, echo=FALSE ,message=FALSE, warning=FALSE, fig.width=6, fig.height=4, fig.align='center'}
 dados %>% 
   ggplot(aes(x = PPG, y = RPG)) +
   geom_point() +
-  geom_smooth(method = "lm") +
-  labs(title='Gráfico com a dispersão entre Pontos por jogo e Rebotes por jogo', x='Pontos por jogo', y='Rebotes por jogo')
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(title='Gráfico com a dispersão entre Pontos por jogo e Rebotes por jogo', x='Pontos por jogo', y='Rebotes por jogo') +
+  theme_classic2()
 ```
+
+Correlação entre as variaveis Pontos e Rebotes por jogo
+
+```{r Correlacao entre as variaveis Pontos e Rebotes, echo = FALSE}
+kable(cor(dados %>% dplyr::select(PPG, RPG)))
+```
+
+
 
 ### Dispersão Altura x Assistências
 
@@ -139,9 +175,19 @@ dados %>%
 dados %>% 
   ggplot(aes(x = Altura, y = APG)) +
   geom_point() +
-  geom_smooth(method = "lm") +
-  labs(title='Gráfico com a dispersão entre Altura e Assistências por jogo', x='Altura', y='Assistências por jogo')
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(title='Gráfico com a dispersão entre Altura e Assistências por jogo', x='Altura', y='Assistências por jogo') +
+  theme_classic2()
 ```
+
+Correlação entre as variaveis Altura e Assistências por jogo
+
+```{r Correlacao entre as variaveis Altura e Assistências por jogo, echo = FALSE}
+kable(cor(dados %>% dplyr::select(Altura, APG)))
+```
+
+
+### Definindo as funcoes geradoras de binwidths com as Regras de Freedman-Diaconis e Sturge
 
 ```{r definindo as funcoes geradoras de binwidths Freedman-Diaconis e Sturge , echo = TRUE}
 
