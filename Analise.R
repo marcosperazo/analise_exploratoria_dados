@@ -84,3 +84,11 @@ dados %>%
   geom_point() +
   geom_smooth(method = "lm")
 
+dados %>% dplyr::select(PPG) %>% ggplot(aes(x=PPG)) +
+  geom_histogram(bins = 20) + labs(title='Histograma de pontos por jogo', x='Pontos por jogo', y='Quantidade de jogadores')
+  
+dados %>% 
+  ggplot(aes(x = Altura, y = APG)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  labs(title='Gráfico com a dispersão entre Altura e Assistência', x='Altura', y='Assistências')

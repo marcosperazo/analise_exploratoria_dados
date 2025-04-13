@@ -88,52 +88,83 @@ dados <- dados %>%
 Analisar a centralidade dos dados, dipersão, assimetria, bem como suas estatísticas de ordem, a fim de checar se há presença de outliers.
 
 ```{r Desc variavel Altura, Peso, Pontos, Rebotes e Assistências, echo=TRUE, message=FALSE, warning=FALSE, error=FALSE}
-dados %>% dplyr::select(Altura, Peso, PPG, RPG, APG) %>% summarytools::descr() %>% kable()
+dados %>% dplyr::select(Altura, Peso, PPG, RPG, APG) %>% 
+  summarytools::descr() %>% kable()
 ```
 
 
 ### Dispersão Altura x Rebotes
 
-```{r Dispersão Altura e Rebotes, include=TRUE, message=FALSE, warning=FALSE}
+```{r Dispersão Altura e Rebotes, include=TRUE, echo=FALSE, message=FALSE, warning=FALSE}
 dados %>% 
   ggplot(aes(x = Altura, y = RPG)) +
   geom_point() +
-  geom_smooth(method = "lm")
+  geom_smooth(method = "lm") +
+  labs(title='Gráfico com a dispersão entre Altura e Rebotes por jogo', x='Altura', y='Rebotes por jogo')
 ```
 
 ### Dispersão Pontos x Peso
 
-```{r Dispersão Pontos e Peso, include=TRUE, message=FALSE, warning=FALSE}
+```{r Dispersão Pontos e Peso, include=TRUE, echo=FALSE, message=FALSE, warning=FALSE}
 dados %>% 
   ggplot(aes(x = Peso, y = PPG)) +
   geom_point() +
-  geom_smooth(method = "lm")
+  geom_smooth(method = "lm") +
+  labs(title='Gráfico com a dispersão entre Peso e Pontos por jogo', x='Peso', y='Pontos por jogo')
 ```
 
 ### Dispersão Pontos x Assistências
 
-```{r Dispersão Pontos e Assistências, include=TRUE, message=FALSE, warning=FALSE}
+```{r Dispersão Pontos e Assistências, include=TRUE, echo=FALSE, message=FALSE, warning=FALSE}
 dados %>% 
   ggplot(aes(x = PPG, y = APG)) +
   geom_point() +
-  geom_smooth(method = "lm")
+  geom_smooth(method = "lm") +
+  labs(title='Gráfico com a dispersão entre Pontos por jogo e Assistências por jogo', x='Pontos por jogo', y='Assistências por jogo')
 ```
 
 ### Dispersão Pontos x Rebotes
 
-```{r Dispersão Pontos e Rebotes, include=TRUE, message=FALSE, warning=FALSE}
+```{r Dispersão Pontos e Rebotes, include=TRUE, echo=FALSE ,message=FALSE, warning=FALSE}
 dados %>% 
   ggplot(aes(x = PPG, y = RPG)) +
   geom_point() +
-  geom_smooth(method = "lm")
+  geom_smooth(method = "lm") +
+  labs(title='Gráfico com a dispersão entre Pontos por jogo e Rebotes por jogo', x='Pontos por jogo', y='Rebotes por jogo')
 ```
 
 ### Dispersão Altura x Assistências
 
-```{r Dispersão Altura e Assistências, include=TRUE, message=FALSE, warning=FALSE}
+```{r Dispersão Altura e Assistências, include=TRUE, echo=FALSE, message=FALSE, warning=FALSE}
 dados %>% 
-  ggplot(aes(x = APG, y = Altura)) +
+  ggplot(aes(x = Altura, y = APG)) +
   geom_point() +
-  geom_smooth(method = "lm")
+  geom_smooth(method = "lm") +
+  labs(title='Gráfico com a dispersão entre Altura e Assistências por jogo', x='Altura', y='Assistências por jogo')
+```
+
+```{r Histograma de pontos por jogo, echo=FALSE}
+dados %>% dplyr::select(PPG) %>% ggplot(aes(x=PPG)) +
+  geom_histogram(bins = 20) + labs(title='Histograma de pontos por jogo', x='Pontos por jogo', y='Quantidade de jogadores')
+```
+
+```{r Histograma de assistências por jogo, echo=FALSE}
+dados %>% dplyr::select(APG) %>% ggplot(aes(x=APG)) +
+  geom_histogram() + labs(title='Histograma de assistências por jogo', x='Assistências por jogo', y='Quantidade de jogadores')
+```
+
+```{r Histograma de rebotes por jogo, echo=FALSE}
+dados %>% dplyr::select(RPG) %>% ggplot(aes(x=RPG)) +
+  geom_histogram() + labs(title='Histograma de rebotes por jogo', x='Pontos por jogo', y='Quantidade de jogadores')
+```
+
+```{r Histograma de Altura, echo=FALSE}
+dados %>% dplyr::select(Altura) %>% ggplot(aes(x=Altura)) +
+  geom_histogram() + labs(title='Histograma de Altura', x='Altura', y='Quantidade de jogadores')
+```
+
+```{r Histograma de Peso, echo=FALSE}
+dados %>% dplyr::select(Peso) %>% ggplot(aes(x=Peso)) +
+  geom_histogram() + labs(title='Histograma de Peso', x='Peso', y='Quantidade de jogadores')
 ```
 
