@@ -169,9 +169,40 @@ imp_Peso <- imp$imp$Peso %>% tidyr::pivot_longer(cols = imp_1:ncol(imp$imp$Peso)
 
 
 
-dados <- as.data.frame(lapply(dados, function(x) {
+dados_incompletos <- as.data.frame(lapply(dados_incompletos, function(x) {
   if (is.character(x)) {
     Encoding(x) <- "UTF-8"
   }
   return(x)
 }))
+
+# Instalando o pacote mice, se ainda não estiver instalado
+# install.packages("mice")
+
+library(mice)
+
+# Visualizando o padrão de valores faltantes (opcional)
+md.pattern(dados_incompletos)
+
+# Executando o processo de imputação
+imputed_data <- mice(dados, 
+                     method = "pmm", # Método: Predictive Mean Matching
+                     m = 5)          # Número de conjuntos imputados
+
+# Obtendo o tibble completo após imputação
+dados_imputados <- complete(imputed_data)
+
+# Visualizando os dados com os valores imputados
+print(dados_imputados)
+
+dados %>% dplyr::select(Peso) %>% ggplot(aes(x=Peso, y = after_stat(density))) + 
+  geom_density(linetype = 2) + 
+  xlab('Peso') + 
+  ylab('Densidade de Frequência') + 
+  theme_classic()
+
+ggplot(dados_imputados, aes(x = Peso, y = after_stat(density), colour = imputed_data)) + 
+  geom_density(linetype = 2) + 
+  xlab('numero de    filhos') + 
+  ylab('Densidade de Frequência') + 
+  theme_classic()

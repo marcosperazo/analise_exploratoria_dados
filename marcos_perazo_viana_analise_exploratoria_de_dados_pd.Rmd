@@ -333,10 +333,14 @@ Embora a quantidade de dados faltantes tenha sido pequena, a quantidade de regis
 
 ## Realize uma operação de imputação de dados usando o pacote MICE.
 
+Criando uma nova Tibble com novo carregamento dos dados
+
 ```{r Carregamento da base de jogadores da NBA para imputação de dados, echo=TRUE, message=FALSE, warning=FALSE}
 dados_brutos <- read_csv("Dados_auxiliares/dados_apos_coluna_mes.csv", quote = "\"",
                            locale = locale(encoding = "UTF-8"), show_col_types = FALSE)
 ```
+
+Tratamento dos dados das colunas PPG, APG e RPG.
 
 ```{r Tratamento dados númericos para imputação de dados, echo=FALSE, message=FALSE, warning=FALSE}
 dados_para_imputacao <- dados_brutos %>%
@@ -347,9 +351,13 @@ dados_para_imputacao <- dados_brutos %>%
   )
 ```
 
+Eliminação da linha 507.
+
 ```{r Eliminação da linha 507 para imputação de dados, echo=TRUE}
 dados_para_imputacao <- dados_para_imputacao %>% slice(-507)
 ```
+
+imputação de dados nas colunas PPG, APG e RPG.
 
 ```{r Atribuir valor zero nos campos PPG, APG e RPG para imputação de dados, echo=TRUE}
 dados_para_imputacao <- dados_para_imputacao %>%
@@ -360,9 +368,13 @@ dados_para_imputacao <- dados_para_imputacao %>%
   )
 ```
 
+Seleção de colunas.
+
 ```{r Select em imputação de dados, echo=TRUE}
 dados_para_imputacao <- dados_para_imputacao %>% select(Altura, Peso)
 ```
+
+Transformação em dataframe.
 
 ```{r as data frame, echo=TRUE}
 dados_para_imputacao <- as.data.frame(lapply(dados_para_imputacao, function(x) {
@@ -373,23 +385,47 @@ dados_para_imputacao <- as.data.frame(lapply(dados_para_imputacao, function(x) {
 }))
 ```
 
+Processo de imputação.
+
 ```{r processo de imputação, echo=TRUE}
 imputed_data <- mice(dados, 
                      method = "pmm", 
                      m = 5)          
 ```
 
+Tibble completo após a imputação.
+
 ```{r tibble completo após imputação, echo=TRUE}
 dados_imputados <- complete(imputed_data)  
 ```
 
-```{r densidade original, echo=TRUE}
-dados %>% dplyr::select(Peso) %>% ggplot(aes(x=Peso, y = after_stat(density))) + geom_density(linetype = 2) + xlab('Peso') + ylab('Densidade de Frequência') + theme_classic()
+Densidade da Tibble original.
+
+```{r densidade original, echo=TRUE, fig.width=6, fig.height=4, fig.align='center'}
+dados %>% dplyr::select(Peso) %>% ggplot(aes(x=Peso, y = after_stat(density))) + 
+  geom_density(linetype = 2) + 
+  xlab('Peso') + 
+  ylab('Densidade de Frequência') + 
+  theme_classic()
 ```
 
-```{r densidade após inclusão, echo=TRUE}
-dados_imputados %>% dplyr::select(Peso) %>% ggplot(aes(x=Peso, y = after_stat(density))) + geom_density(linetype = 2) + xlab('Peso') + ylab('Densidade de Frequência') + theme_classic()
+Densidade da Tibble com os dados imputados.
+
+```{r densidade após inclusão, echo=TRUE, fig.width=6, fig.height=4, fig.align='center'}
+dados_imputados %>% dplyr::select(Peso) %>% ggplot(aes(x=Peso, y = after_stat(density))) + 
+  geom_density(linetype = 2) + 
+  xlab('Peso') + 
+  ylab('Densidade de Frequência') + 
+  theme_classic()
 ```
+
+## Shiny
+
+Crie um dashboard Shiny onde seja possível selecionar (tire um print-screen da tela final do sistema):
+uma variável da sua base de dados e um gráfico em linha seja mostrado na tela;
+escolher a cor da linha do gráfico;
+selecionar o limite inferior e superior do eixo X do gráfico;
+selecionar o limite inferior e superior do eixo Y do gráfico.
 
 Abaixo segue o link do repositório no Github, onde pode ser encontrado os arquivos RMarkdown e Shiny:
 [Repositório no Github](https://github.com/marcosperazo/analise_exploratoria_dados)
