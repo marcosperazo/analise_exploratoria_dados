@@ -304,8 +304,34 @@ Q-Q Plot de Altura
 qqnorm(dados$Altura)
 ```
 
-Shappiro
+### Teste de Shapiro-Wilk
 
+A hipótese nula é: A distribuição de Pontos por partida segue distribuição normal.
 
-Com base nos itens anteriores, é possível afirmar que as variáveis Altura e Peso se aproximam de uma distribuição normal. Nos histogramas de Altura e Peso, verificamos um formato de sino e nos Q-Q Plots de Altura e Peso, o resultado foram retas muito próximas do que esperamos para as distribuições normais.
+A hipótese alternativa: A distribuição de Pontos por partida não segue distribuição normal.
 
+```{r Testes de Shapiro Wilk, echo=FALSE}
+shapiro.test(dados$PPG)
+```
+
+O resultado indica que devemos rejeitar a hipótese nula.Portanto, a distribuição de Pontos por partida não segue distribuição normal.
+
+### Conclusão das normalidades:
+Com base nos itens anteriores, é possível afirmar que as variáveis Altura e Peso são as que mais se aproximam de uma distribuição normal. Nos histogramas de Altura e Peso, verificamos um formato de sino e nos Q-Q Plots de Altura e Peso, o resultado foram retas muito próximas do que esperamos para as distribuições normais.
+
+## Qualidade dos dados
+
+Qualidade de dados tem sido um dos temas mais abordados nos projetos de estruturação em data analytics, sendo um dos principais indicadores do nível de maturidade das organizações. Um dos problemas mais comuns de qualidade é relacionado à completude de dados. Em suas palavras, como é definido completude? Qual o impacto em uma análise exploratória de dados?
+
+Qual a completude para cada uma das variáveis do seu banco de dados?
+
+Realize uma operação de imputação de dados usando o pacote MICE.
+
+Crie um dashboard Shiny onde seja possível selecionar (tire um print-screen da tela final do sistema):
+uma variável da sua base de dados e um gráfico em linha seja mostrado na tela;
+escolher a cor da linha do gráfico;
+selecionar o limite inferior e superior do eixo X do gráfico;
+selecionar o limite inferior e superior do eixo Y do gráfico.
+
+Abaixo segue o link do repositório no Github, onde pode ser encontrado os arquivos RMarkdown e Shiny:
+[Repositório no Github](https://github.com/marcosperazo/analise_exploratoria_dados)

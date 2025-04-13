@@ -146,3 +146,5 @@ qqnorm(dados$APG)
 qqnorm(dados$RPG)
 qqnorm(dados$PPG)
 + labs(title='Histograma de pontos por jogo')
+
+shapiro.test(dados$Peso)
