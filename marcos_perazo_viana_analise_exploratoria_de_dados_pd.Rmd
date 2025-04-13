@@ -317,21 +317,79 @@ shapiro.test(dados$PPG)
 O resultado indica que devemos rejeitar a hipótese nula.Portanto, a distribuição de Pontos por partida não segue distribuição normal.
 
 ### Conclusão das normalidades:
-Com base nos itens anteriores, é possível afirmar que as variáveis Altura e Peso são as que mais se aproximam de uma distribuição normal. Nos histogramas de Altura e Peso, verificamos um formato de sino e nos Q-Q Plots de Altura e Peso, o resultado foram retas muito próximas do que esperamos para as distribuições normais.
+Com base nos itens anteriores, é possível afirmar que as variáveis Altura e Peso, visualmente, são as que mais se aproximam de uma distribuição normal. Nos histogramas de Altura e Peso, verificamos um formato de sino e nos Q-Q Plots de Altura e Peso, o resultado foram retas muito próximas do que esperamos para as distribuições normais.
 
 ## Qualidade dos dados
 
-Qualidade de dados tem sido um dos temas mais abordados nos projetos de estruturação em data analytics, sendo um dos principais indicadores do nível de maturidade das organizações. Um dos problemas mais comuns de qualidade é relacionado à completude de dados. Em suas palavras, como é definido completude? Qual o impacto em uma análise exploratória de dados?
+A Completude dos Dados se refere à presença ou ausência de dados essenciais em um conjunto de dados. Um conjunto de dados é considerado completo quando todos os campos relevantes possuem valores registrados para a abálise, sem dados faltantes. A falta de completude afeta significativamente a confiabilidade de uma análise exploratória de dados, pelos motivos listados abaixo:
+Os Dados ausentes podem introduzir viés, levando a conclusões incorretas.
+Muitos funções e métodos assumem que os dados estão completos. Dados ausentes podem inviabilizar análises, como correlações ou regressões.
+Variáveis com valores faltantes podem ser excluídas no pré-processamento, reduzindo a quantidade de dados disponível para análise.
+A necessidade de lidar com valores ausentes, por meio de imputação ou outras técnicas, aumenta o esforço e o tempo necessários para realizar a análise.
+Ou seja, a completude dos dados é fundamental para garantir a consistência e a precisão de insights extraídos de uma análise.
 
-Qual a completude para cada uma das variáveis do seu banco de dados?
+A análise foi feita utilizando as estatísticas dos jogadores ativos da NBA, no projeto em questão, em relação aos dados que foram utilizados nas análises, verificamos, através das estatística por partida, que os dados faltantes relacionados com as variáveis Pontos, Assistências e Rebotes por partida deveriam ser preenchidos com o valor 0 (zero), o que foi feito. Na coluna referente ao Peso dos atletas, apenas dois registros possuiam dados faltantes.
+Embora a quantidade de dados faltantes tenha sido pequena, a quantidade de registros utilizados após o tratamento (466 registros) também é pequena. O ideal para a análise em questão teria sido a utilização de dados dos jogadores ativos e inativos, de forma a tornar a base de dados mais completa.
 
-Realize uma operação de imputação de dados usando o pacote MICE.
+## Realize uma operação de imputação de dados usando o pacote MICE.
 
-Crie um dashboard Shiny onde seja possível selecionar (tire um print-screen da tela final do sistema):
-uma variável da sua base de dados e um gráfico em linha seja mostrado na tela;
-escolher a cor da linha do gráfico;
-selecionar o limite inferior e superior do eixo X do gráfico;
-selecionar o limite inferior e superior do eixo Y do gráfico.
+```{r Carregamento da base de jogadores da NBA para imputação de dados, echo=TRUE, message=FALSE, warning=FALSE}
+dados_brutos <- read_csv("Dados_auxiliares/dados_apos_coluna_mes.csv", quote = "\"",
+                           locale = locale(encoding = "UTF-8"), show_col_types = FALSE)
+```
+
+```{r Tratamento dados númericos para imputação de dados, echo=FALSE, message=FALSE, warning=FALSE}
+dados_para_imputacao <- dados_brutos %>%
+  mutate(
+    PPG = as.numeric(PPG),
+    RPG = as.numeric(RPG),
+    APG = as.numeric(APG),
+  )
+```
+
+```{r Eliminação da linha 507 para imputação de dados, echo=TRUE}
+dados_para_imputacao <- dados_para_imputacao %>% slice(-507)
+```
+
+```{r Atribuir valor zero nos campos PPG, APG e RPG para imputação de dados, echo=TRUE}
+dados_para_imputacao <- dados_para_imputacao %>%
+  mutate(
+    PPG = replace_na(PPG, 0),
+    RPG = replace_na(RPG, 0),
+    APG = replace_na(APG, 0)
+  )
+```
+
+```{r Select em imputação de dados, echo=TRUE}
+dados_para_imputacao <- dados_para_imputacao %>% select(Altura, Peso)
+```
+
+```{r as data frame, echo=TRUE}
+dados_para_imputacao <- as.data.frame(lapply(dados_para_imputacao, function(x) {
+  if (is.character(x)) {
+    Encoding(x) <- "UTF-8"
+  }
+  return(x)
+}))
+```
+
+```{r processo de imputação, echo=TRUE}
+imputed_data <- mice(dados, 
+                     method = "pmm", 
+                     m = 5)          
+```
+
+```{r tibble completo após imputação, echo=TRUE}
+dados_imputados <- complete(imputed_data)  
+```
+
+```{r densidade original, echo=TRUE}
+dados %>% dplyr::select(Peso) %>% ggplot(aes(x=Peso, y = after_stat(density))) + geom_density(linetype = 2) + xlab('Peso') + ylab('Densidade de Frequência') + theme_classic()
+```
+
+```{r densidade após inclusão, echo=TRUE}
+dados_imputados %>% dplyr::select(Peso) %>% ggplot(aes(x=Peso, y = after_stat(density))) + geom_density(linetype = 2) + xlab('Peso') + ylab('Densidade de Frequência') + theme_classic()
+```
 
 Abaixo segue o link do repositório no Github, onde pode ser encontrado os arquivos RMarkdown e Shiny:
 [Repositório no Github](https://github.com/marcosperazo/analise_exploratoria_dados)

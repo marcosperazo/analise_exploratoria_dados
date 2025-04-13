@@ -16,6 +16,7 @@ install.packages('knitr')
 install.packages('scales')
 install.packages('dplyr')
 install.packages('naniar')
+install.packages('mice')
 
 library(tidyverse)
 library(ggplot2)
@@ -30,6 +31,7 @@ library(tidyr)
 library(stringr)
 library(lubridate)
 library(naniar)
+library(mice)
 #
 # Carregando a tabela bruta
 dados_tratados <- read_csv("Dados_auxiliares/dados_apos_coluna_mes.csv", quote = "\"", locale = locale(encoding = "UTF-8"))
@@ -138,13 +140,38 @@ ggqqplot(dados$Altura,
 
 
 
-qqnorm(dados$Peso)
-qqnorm(dados$Altura)
-qqnorm(dados$PPG)
 
-qqnorm(dados$APG)
-qqnorm(dados$RPG)
-qqnorm(dados$PPG)
-+ labs(title='Histograma de pontos por jogo')
+
 
 shapiro.test(dados$Peso)
+
+
+
+dados %>% 
+  ggplot(aes(x = Altura, y = Peso)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(title='Gráfico com a dispersão entre Altura e Rebotes por jogo', x='Altura', y='Peso') +
+  theme_classic2()
+
+
+
+
+
+dados_preenchidos <- complete(imp)
+
+
+names(imp$imp$Peso) <- paste("imp", names(imp$imp$Peso), sep = "_")
+imp_Peso <- imp$imp$Peso %>% tidyr::pivot_longer(cols = imp_1:ncol(imp$imp$Peso), values_to = "Peso", names_to   = "imp") %>% arrange(imp)
+
+
+
+
+
+
+dados <- as.data.frame(lapply(dados, function(x) {
+  if (is.character(x)) {
+    Encoding(x) <- "UTF-8"
+  }
+  return(x)
+}))
