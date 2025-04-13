@@ -84,6 +84,24 @@ dados %>%
   geom_point() +
   geom_smooth(method = "lm")
 
+
+
+fd <- function(x) {
+  n <-length(x)
+  return((2*IQR(x))/n^(1/3))
+}
+
+sr <- function(x) {
+  n <-length(x)
+  return((3.49*sd(x))/n^(1/3))
+}
+
+dados %>% dplyr::select(PPG) %>% ggplot(aes(x=PPG)) +
+  geom_histogram(binwidth = fd) + 
+  labs(title='Histograma de pontos por jogo',subtitle='Binarização pela Regra de Freedman-Diaconis' ,x='Pontos por jogo', y='Quantidade de jogadores')
+
+
+
 dados %>% dplyr::select(PPG) %>% ggplot(aes(x=PPG)) +
   geom_histogram(bins = 20) + labs(title='Histograma de pontos por jogo', x='Pontos por jogo', y='Quantidade de jogadores')
   
@@ -92,3 +110,6 @@ dados %>%
   geom_point() +
   geom_smooth(method = "lm") +
   labs(title='Gráfico com a dispersão entre Altura e Assistência', x='Altura', y='Assistências')
+
+
+

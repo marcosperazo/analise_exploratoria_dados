@@ -6,7 +6,7 @@ output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, fig.width = 6.4, fig.height = 4.8)
 tinytex::install_tinytex(force = TRUE)
 ```
 
@@ -95,7 +95,7 @@ dados %>% dplyr::select(Altura, Peso, PPG, RPG, APG) %>%
 
 ### Dispersão Altura x Rebotes
 
-```{r Dispersão Altura e Rebotes, include=TRUE, echo=FALSE, message=FALSE, warning=FALSE}
+```{r Dispersão Altura e Rebotes, include=TRUE, echo=FALSE, message=FALSE, warning=FALSE, fig.width=6.4, fig.height=4.8}
 dados %>% 
   ggplot(aes(x = Altura, y = RPG)) +
   geom_point() +
@@ -105,7 +105,7 @@ dados %>%
 
 ### Dispersão Pontos x Peso
 
-```{r Dispersão Pontos e Peso, include=TRUE, echo=FALSE, message=FALSE, warning=FALSE}
+```{r Dispersão Pontos e Peso, include=TRUE, echo=FALSE, message=FALSE, warning=FALSE, fig.width=6.4, fig.height=4.8}
 dados %>% 
   ggplot(aes(x = Peso, y = PPG)) +
   geom_point() +
@@ -115,7 +115,7 @@ dados %>%
 
 ### Dispersão Pontos x Assistências
 
-```{r Dispersão Pontos e Assistências, include=TRUE, echo=FALSE, message=FALSE, warning=FALSE}
+```{r Dispersão Pontos e Assistências, include=TRUE, echo=FALSE, message=FALSE, warning=FALSE, fig.width=6.4, fig.height=4.8}
 dados %>% 
   ggplot(aes(x = PPG, y = APG)) +
   geom_point() +
@@ -125,7 +125,7 @@ dados %>%
 
 ### Dispersão Pontos x Rebotes
 
-```{r Dispersão Pontos e Rebotes, include=TRUE, echo=FALSE ,message=FALSE, warning=FALSE}
+```{r Dispersão Pontos e Rebotes, include=TRUE, echo=FALSE ,message=FALSE, warning=FALSE, fig.width=6.4, fig.height=4.8}
 dados %>% 
   ggplot(aes(x = PPG, y = RPG)) +
   geom_point() +
@@ -135,7 +135,7 @@ dados %>%
 
 ### Dispersão Altura x Assistências
 
-```{r Dispersão Altura e Assistências, include=TRUE, echo=FALSE, message=FALSE, warning=FALSE}
+```{r Dispersão Altura e Assistências, include=TRUE, echo=FALSE, message=FALSE, warning=FALSE, fig.width=6, fig.height=4, fig.align='center'}
 dados %>% 
   ggplot(aes(x = Altura, y = APG)) +
   geom_point() +
@@ -143,28 +143,77 @@ dados %>%
   labs(title='Gráfico com a dispersão entre Altura e Assistências por jogo', x='Altura', y='Assistências por jogo')
 ```
 
-```{r Histograma de pontos por jogo, echo=FALSE}
+```{r definindo as funcoes geradoras de binwidths Freedman-Diaconis e Sturge , echo = TRUE}
+
+fd <- function(x) {
+  n <-length(x)
+  return((2*IQR(x))/n^(1/3))
+}
+
+sr <- function(x) {
+  n <-length(x)
+  return((3.49*sd(x))/n^(1/3))
+}
+```
+
+
+```{r Histograma de pontos por jogo com Regra de Freedman-Diaconis, echo=FALSE, fig.width=6, fig.height=4, fig.align='center'}
 dados %>% dplyr::select(PPG) %>% ggplot(aes(x=PPG)) +
-  geom_histogram(bins = 20) + labs(title='Histograma de pontos por jogo', x='Pontos por jogo', y='Quantidade de jogadores')
+  geom_histogram(binwidth = fd) + 
+  labs(title='Histograma de pontos por jogo',subtitle='Binarização pela Regra de Freedman-Diaconis' ,x='Pontos por jogo', y='Quantidade de jogadores')
 ```
 
-```{r Histograma de assistências por jogo, echo=FALSE}
+```{r Histograma de pontos por jogo com Regra de Sturge, echo=FALSE, fig.width=6, fig.height=4, fig.align='center'}
+dados %>% dplyr::select(PPG) %>% ggplot(aes(x=PPG)) +
+  geom_histogram(binwidth = sr) + 
+  labs(title='Histograma de pontos por jogo',subtitle='Binarização pela Regra de Sturge' ,x='Pontos por jogo', y='Quantidade de jogadores')
+```
+
+```{r Histograma de assistências por jogo com Regra de Freedman-Diaconis, echo=FALSE, fig.width=6, fig.height=4, fig.align='center'}
 dados %>% dplyr::select(APG) %>% ggplot(aes(x=APG)) +
-  geom_histogram() + labs(title='Histograma de assistências por jogo', x='Assistências por jogo', y='Quantidade de jogadores')
+  geom_histogram(binwidth = fd) + 
+  labs(title='Histograma de assistências por jogo',subtitle='Binarização pela Regra de Freedman-Diaconis' , x='Assistências por jogo', y='Quantidade de jogadores')
 ```
 
-```{r Histograma de rebotes por jogo, echo=FALSE}
+```{r Histograma de assistências por jogo com Regra de Sturge, echo=FALSE, fig.width=6, fig.height=4, fig.align='center'}
+dados %>% dplyr::select(APG) %>% ggplot(aes(x=APG)) +
+  geom_histogram(binwidth = sr) + 
+  labs(title='Histograma de assistências por jogo',subtitle='Binarização pela Regra de Sturge' , x='Assistências por jogo', y='Quantidade de jogadores')
+```
+
+```{r Histograma de rebotes por jogo com Regra de Freedman-Diaconis, echo=FALSE, fig.width=6, fig.height=4, fig.align='center'}
 dados %>% dplyr::select(RPG) %>% ggplot(aes(x=RPG)) +
-  geom_histogram() + labs(title='Histograma de rebotes por jogo', x='Pontos por jogo', y='Quantidade de jogadores')
+  geom_histogram(binwidth = fd) + 
+  labs(title='Histograma de rebotes por jogo', subtitle='Binarização pela Regra de Freedman-Diaconis' ,x='Pontos por jogo', y='Quantidade de jogadores')
 ```
 
-```{r Histograma de Altura, echo=FALSE}
+```{r Histograma de rebotes por jogo com Regra de Sturge, echo=FALSE, fig.width=6, fig.height=4, fig.align='center'}
+dados %>% dplyr::select(RPG) %>% ggplot(aes(x=RPG)) +
+  geom_histogram(binwidth = sr) + 
+  labs(title='Histograma de rebotes por jogo', subtitle='Binarização pela com Regra de Sturge', x='Pontos por jogo', y='Quantidade de jogadores')
+```
+
+```{r Histograma de Altura com Regra de Freedman-Diaconis, echo=FALSE, fig.width=6, fig.height=4, fig.align='center'}
 dados %>% dplyr::select(Altura) %>% ggplot(aes(x=Altura)) +
-  geom_histogram() + labs(title='Histograma de Altura', x='Altura', y='Quantidade de jogadores')
+  geom_histogram(binwidth = fd) + 
+  labs(title='Histograma de Altura', subtitle='Binarização pela com Regra de Freedman-Diaconis', x='Altura', y='Quantidade de jogadores')
 ```
 
-```{r Histograma de Peso, echo=FALSE}
+```{r Histograma de Altura com Regra de Regra de Sturge, echo=FALSE, fig.width=6, fig.height=4, fig.align='center'}
+dados %>% dplyr::select(Altura) %>% ggplot(aes(x=Altura)) +
+  geom_histogram(binwidth = sr) + 
+  labs(title='Histograma de Altura', subtitle='Binarização pela com Regra de Sturge', x='Altura', y='Quantidade de jogadores')
+```
+
+```{r Histograma de Peso com Regra de Freedman-Diaconis, echo=FALSE, warning=FALSE, fig.width=6, fig.height=4, fig.align='center'}
 dados %>% dplyr::select(Peso) %>% ggplot(aes(x=Peso)) +
-  geom_histogram() + labs(title='Histograma de Peso', x='Peso', y='Quantidade de jogadores')
+  geom_histogram(binwidth = fd) + 
+  labs(title='Histograma de Peso', subtitle='Binarização pela com Regra de Freedman-Diaconis', x='Peso', y='Quantidade de jogadores')
+```
+
+```{r Histograma de Peso com Regra de Sturge, echo=FALSE, warning=FALSE, fig.width=6, fig.height=4, fig.align='center'}
+dados %>% dplyr::select(Peso) %>% ggplot(aes(x=Peso)) +
+  geom_histogram(binwidth = sr) + 
+  labs(title='Histograma de Peso', subtitle='Binarização pela com Regra de Sturge', x='Peso', y='Quantidade de jogadores')
 ```
 
