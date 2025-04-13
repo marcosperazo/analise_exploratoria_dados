@@ -206,3 +206,16 @@ ggplot(dados_imputados, aes(x = Peso, y = after_stat(density), colour = imputed_
   xlab('numero de    filhos') + 
   ylab('Densidade de Frequência') + 
   theme_classic()
+
+
+library(shiny)
+runApp("app")
+
+library(shiny)
+
+# See above for the definitions of ui and server
+ui <- ...
+
+server <- ...
+
+shinyApp(ui = ui, server = server)
