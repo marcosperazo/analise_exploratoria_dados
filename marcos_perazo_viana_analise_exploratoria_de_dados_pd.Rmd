@@ -33,6 +33,7 @@ library(sandwich)
 library(magrittr)
 library(shiny)
 library(plm)
+library(naniar)
 ```
 
 # Introdução
@@ -85,8 +86,11 @@ dados <- dados %>%
   )
 ```
 
-3 - 
+3 - Foram encontrados dois registros com o campo Peso com valor NA. Os dados faltantes serão omitidos.
 
+```{r Eliminação das linhas onde o Peso recebe NA, echo=TRUE}
+dados <- dados %>% filter(!is.na(Peso))
+```
 
 Analisar a centralidade dos dados, dipersão, assimetria, bem como suas estatísticas de ordem, a fim de checar se há presença de outliers.
 
@@ -187,6 +191,11 @@ kable(cor(dados %>% dplyr::select(Altura, APG)))
 ```
 
 
+## Normalidade das variáveis
+
+A normalidade das variáveis refere-se à ideia de que os dados seguem uma distribuição normal, também conhecida como distribuição gaussiana. Essa distribuição é simétrica em torno da média, com a maioria dos valores concentrados próximos a ela, e a frequência diminuindo à medida que os valores se afastam da média. É representada por uma curva em forma de sino.
+
+
 ### Definindo as funcoes geradoras de binwidths com as Regras de Freedman-Diaconis e Sturge
 
 ```{r definindo as funcoes geradoras de binwidths Freedman-Diaconis e Sturge , echo = TRUE}
@@ -262,4 +271,41 @@ dados %>% dplyr::select(Peso) %>% ggplot(aes(x=Peso)) +
   geom_histogram(binwidth = sr) + 
   labs(title='Histograma de Peso', subtitle='Binarização pela com Regra de Sturge', x='Peso', y='Quantidade de jogadores')
 ```
+
+### Q-Q Plot para checar visualmente a normalidade das distribuições
+
+Q-Q Plot de Pontos por partida
+
+```{r QQ Plot de Pontos por partida, echo=FALSE, fig.width=6, fig.height=4, fig.align='center'}
+qqnorm(dados$PPG)
+```
+
+Q-Q Plot de Assistências por partida
+
+```{r QQ Plot de Assistências por partida, echo=FALSE, fig.width=6, fig.height=4, fig.align='center'}
+qqnorm(dados$APG)
+```
+
+Q-Q Plot de Rebotes por partida
+
+```{r QQ Plot de Rebotes por partida, echo=FALSE, fig.width=6, fig.height=4, fig.align='center'}
+qqnorm(dados$RPG)
+```
+
+Q-Q Plot de Peso
+
+```{r QQ Plot de Peso, echo=FALSE, fig.width=6, fig.height=4, fig.align='center'}
+qqnorm(dados$Peso)
+```
+
+Q-Q Plot de Altura
+
+```{r QQ Plot de Altura, echo=FALSE, fig.width=6, fig.height=4, fig.align='center'}
+qqnorm(dados$Altura)
+```
+
+Shappiro
+
+
+Com base nos itens anteriores, é possível afirmar que as variáveis Altura e Peso se aproximam de uma distribuição normal. Nos histogramas de Altura e Peso, verificamos um formato de sino e nos Q-Q Plots de Altura e Peso, o resultado foram retas muito próximas do que esperamos para as distribuições normais.
 

@@ -15,7 +15,7 @@ install.packages('readxl')
 install.packages('knitr')
 install.packages('scales')
 install.packages('dplyr')
-
+install.packages('naniar')
 
 library(tidyverse)
 library(ggplot2)
@@ -29,7 +29,7 @@ library(readr)
 library(tidyr)
 library(stringr)
 library(lubridate)
-
+library(naniar)
 #
 # Carregando a tabela bruta
 dados_tratados <- read_csv("Dados_auxiliares/dados_apos_coluna_mes.csv", quote = "\"", locale = locale(encoding = "UTF-8"))
@@ -112,4 +112,37 @@ dados %>%
   labs(title='Gráfico com a dispersão entre Altura e Assistência', x='Altura', y='Assistências')
 
 
+library(dplyr)
 
+# Supondo que o tibble se chama "dados"
+linhas_com_na <- dados %>% filter(is.na(Peso))
+
+# Para visualizar as linhas filtradas
+print(linhas_com_na)
+
+library(dplyr)
+
+# Atualizando o tibble removendo as linhas onde Peso é NA
+dados <- dados %>% filter(!is.na(Peso))
+
+# Instalando o pacote ggpubr, se ainda não estiver instalado
+install.packages("ggpubr")
+
+library(ggpubr)
+
+# Supondo que o tibble 'dados' contenha a variável 'Altura'
+ggqqplot(dados$Altura, 
+         title = "Gráfico Q-Q para Altura",
+         xlab = "Quantis teóricos",
+         ylab = "Quantis observados")
+
+
+
+qqnorm(dados$Peso)
+qqnorm(dados$Altura)
+qqnorm(dados$PPG)
+
+qqnorm(dados$APG)
+qqnorm(dados$RPG)
+qqnorm(dados$PPG)
++ labs(title='Histograma de pontos por jogo')
