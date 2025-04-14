@@ -421,13 +421,9 @@ dados_imputados %>% dplyr::select(Peso) %>% ggplot(aes(x=Peso, y = after_stat(de
 
 ## Shiny
 
-Crie um dashboard Shiny onde seja possível selecionar (tire um print-screen da tela final do sistema):
-uma variável da sua base de dados e um gráfico em linha seja mostrado na tela;
-escolher a cor da linha do gráfico;
-selecionar o limite inferior e superior do eixo X do gráfico;
-selecionar o limite inferior e superior do eixo Y do gráfico.
+Segue dashboard Shiny criado.
 
 ![Dashboard do Shiny](Dados_auxiliares/print_dashboard.png)
 
-Abaixo segue o link do repositório no Github, onde pode ser encontrado os arquivos RMarkdown e Shiny:
+## Abaixo segue o link do repositório no Github, onde pode ser encontrado os arquivos RMarkdown e Shiny:
 [Repositório no Github](https://github.com/marcosperazo/analise_exploratoria_dados)
