@@ -427,5 +427,7 @@ escolher a cor da linha do gráfico;
 selecionar o limite inferior e superior do eixo X do gráfico;
 selecionar o limite inferior e superior do eixo Y do gráfico.
 
+![Dashboard do Shiny](Dados_auxiliares/print_dashboard.png)
+
 Abaixo segue o link do repositório no Github, onde pode ser encontrado os arquivos RMarkdown e Shiny:
 [Repositório no Github](https://github.com/marcosperazo/analise_exploratoria_dados)

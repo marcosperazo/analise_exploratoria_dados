@@ -13,6 +13,7 @@ library(bslib)
 library(shiny)
 library(tidyverse)
 library(readr)
+library(colourpicker)
 
 # Carregar e ajustar os dados
 dados_tratados <- read_csv("Dados_auxiliares/dados_apos_coluna_mes.csv", 
@@ -24,7 +25,7 @@ dados <- dados_tratados %>%
   mutate(
     PPG = as.numeric(PPG),
     RPG = as.numeric(RPG),
-    APG = as.numeric(APG),
+    APG = as.numeric(APG)
   ) %>%
   slice(-507) %>%
   mutate(
@@ -35,6 +36,7 @@ dados <- dados_tratados %>%
   filter(!is.na(Peso))
 
 # Interface do usuário
+
 ui <- fluidPage(
   titlePanel("Dashboard: Gráfico em Linha"),
   
@@ -46,9 +48,9 @@ ui <- fluidPage(
                   choices = c("PPG", "APG", "RPG", "Altura", "Peso")),
       colourInput("line_color", "Selecione a cor da linha:", value = "blue"),
       sliderInput("x_lim", "Limites do eixo X:", 
-                  min = 0, max = 100, value = c(0, 100)),
+                  min = 0, max = 30, value = c(0, 30)),
       sliderInput("y_lim", "Limites do eixo Y:", 
-                  min = 0, max = 100, value = c(0, 100))
+                  min = 0, max = 30, value = c(0, 30))
     ),
     
     mainPanel(
@@ -57,7 +59,6 @@ ui <- fluidPage(
   )
 )
 
-# Servidor
 server <- function(input, output) {
   output$line_plot <- renderPlot({
     ggplot(data = dados, aes_string(x = input$x_var, y = input$y_var)) +
@@ -69,5 +70,4 @@ server <- function(input, output) {
   })
 }
 
-# Rodar o aplicativo Shiny
 shinyApp(ui = ui, server = server)
